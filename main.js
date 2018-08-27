@@ -74,6 +74,13 @@
                 currentProduct[0]['quantity'] = 1;
             }
             insertItemToDOM(currentProduct[0]);
+            addToCartButtonsDOM.forEach(addToCartButtonDOM => {
+                const productDOM = addToCartButtonDOM.parentNode.parentNode;
+            
+                if (productDOM.querySelector('.product__name').innerText === currentProduct[0].name) {
+                    handleActionButtons(addToCartButtonDOM, currentProduct[0]);
+                }
+            });
             cart.push(currentProduct[0]);
         }else{
             clearCart(true);
