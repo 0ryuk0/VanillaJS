@@ -122,7 +122,7 @@
             <div class="cart__item">
             <img class="cart__item__image" src="${product.img_url}" alt="${product.name}">
             <h3 class="cart__item__name">${product.name}</h3>
-            <h3 class="cart__item__price">${(product.updatedPrice? product.updatedPrice: product.price)}</h3>
+            <h3 class="cart__item__price">${product.price}</h3>
             <button data-action="DECREASE_ITEM">&minus;</button>
             <h3 class="cart__item__quantity">${product.quantity}</h3>
             <button data-action="INCREASE_ITEM">&plus;</button>
@@ -170,7 +170,8 @@
 
     function removeItem(product, cartItemDOM, addToCartButtonDOM) {
         cartItemDOM.classList.add('cart__item--removed');
-        setTimeout(() => cartItemDOM.remove(), 250);
+        setTimeout(() => cartItemDOM.remove(), 250);        
+        products.map(item => item.id === product.id ? item['quantity'] = 0 : item);
         cart = cart.filter(cartItem => cartItem.name !== product.name);
         localStorage.setItem('cart', JSON.stringify(cart));
         addToCartButtonDOM.innerText = 'Add To Cart';
@@ -216,15 +217,16 @@
         });
 
         cart.forEach((cartItem) => {
+            let typeDiscount = cartItem.type === 'fiction' ? 
+            (cartItem.updatedPrice ? (cartItem.updatedPrice*0.15) : (cartItem.price*0.15)) * 
+            (cartItem.quantity? cartItem.quantity : 1) :
+            0;
             totalSummary.cartItemCount += (cartItem.quantity? cartItem.quantity: 0);
             totalSummary.totalRawPrice += cartItem.price * (cartItem.quantity? cartItem.quantity: 1);
-            totalSummary.typeDiscount += cartItem.type === 'fiction' ? 
-                                            (cartItem.updatedPrice ? (cartItem.updatedPrice*0.15) : (cartItem.price*0.15)) * 
-                                            (cartItem.quantity? cartItem.quantity : 1) :
-                                            0;
-            totalSummary.cartTotal += (cartItem.quantity * (cartItem.updatedPrice? cartItem.updatedPrice :cartItem.price)) - totalSummary.typeDiscount;                                        
-            totalSummary.totalDiscount = totalSummary.totalRawPrice - totalSummary.cartTotal - totalSummary.typeDiscount;
+            totalSummary.typeDiscount += typeDiscount;
+            totalSummary.cartTotal += (cartItem.quantity * (cartItem.updatedPrice? cartItem.updatedPrice :cartItem.price)) - typeDiscount;                                        
         });
+        totalSummary.totalDiscount = totalSummary.totalRawPrice - totalSummary.cartTotal - totalSummary.typeDiscount;
         
         // insert total-order summary component
         totalDOM.insertAdjacentHTML('beforeend', `
