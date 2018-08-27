@@ -191,6 +191,7 @@ button {
   padding: var(--base-padding);
   transition: .3s all;
   filter: drop-shadow(0px 0px 0px transparent);
+  z-index: 8;
 }
 
 .discount-ribbon{
@@ -198,9 +199,11 @@ button {
   color: var(--color-white);
   padding: 5px;
   width: 45px;
-  top: 27%;
+  margin-top: 20px;
   font-weight: 200;
   position: absolute;
+  z-index: 9;
+  opacity: 0.8;
   background-color: var(--color-green);
 }
 
