@@ -1,0 +1,390 @@
+:root {
+  --color-white: #f4f4f4;
+  --color-gray-light: #d1d1d1;
+  --color-black: #222;  
+  --color-grey: #efefef;
+  --color-primary: #0099ff;
+  --color-primary-light: #a9d0f5;
+  --color-danger: #e90000;
+  --color-danger-light: #f5b5b5;
+  --color-green: #70c35d;
+  --min-width: 360px;
+  --max-width: 1200px;
+  --base-font-family: Arial, Helvetica, sans-serif;
+  --base-padding: 10px;
+  font-size: 12px;
+}
+
+@media screen and (min-width: 600px) {
+  :root {
+    --base-padding: 12px;
+    font-size: 14px; 
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  :root {
+    --base-padding: 20px;
+    font-size: 16px;
+  }
+}
+
+body {
+  margin: 0;
+  min-width: var(--min-width);
+  color: var(--color-black);
+  font-family: var(--base-font-family);
+}
+
+/* Header */
+header{
+  width: 100%;
+  height: 40px;
+  background-color: #e5e5e5;
+}
+
+/* ----------------- Layout ----------------- */
+
+.main-container {
+  max-width: var(--max-width);
+  display: grid;
+  grid-gap: var(--base-padding);
+  grid-template-columns: auto;
+  margin: 0 auto;
+  padding: 50px var(--base-padding);
+}
+
+@media screen and (min-width: 600px) {
+  .main-container { grid-template-columns: auto }
+}
+
+@media screen and (min-width: 1000px) {
+  .main-container { grid-template-columns: auto }
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ----------------- Typography ----------------- */
+
+h1, h2, h3, h5 {
+  font-weight: 300;
+  /* margin: 1rem auto; */
+}
+
+p {
+  margin: 0.5rem auto;
+}
+
+.page-title{
+  margin: 0 0 30px;
+  padding-bottom: 9px;
+  border-bottom: 0.1rem solid var(--color-grey);
+}
+
+.text-center {
+  text-align: center;
+}
+ .align-right{
+   float: right;
+ }
+/* ----------------- Buttons ----------------- */
+
+button {
+  font-family: var(--base-font-family);
+  cursor: pointer;
+  font-size: .75rem;
+  border: none;
+  border-radius: 3px;
+}
+
+:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.btn {
+  padding: .4rem .6rem;
+  transition: .3s all;
+}
+
+.btn--small {
+  padding: .2rem .4rem;
+}
+
+.btn--primary {
+  color: var(--color-white);
+  background: var(--color-primary);
+}
+
+.btn--primary:hover:not(:disabled),
+.btn--primary:focus {
+  outline: none;
+  box-shadow: 0 0 0 5px var(--color-primary-light);
+}
+
+.btn--danger {
+  color: var(--color-white);
+  background: var(--color-danger);
+}
+
+.btn--danger:hover:not(:disabled),
+.btn--danger:focus {
+  outline: none;
+  box-shadow: 0 0 0 5px var(--color-danger-light);
+}
+
+/* ----------------- Products ----------------- */
+
+.products {
+  display: grid;
+  grid-gap: var(--base-padding);
+  overflow: auto;
+}
+
+@media screen and (min-width: 600px) {
+  .products {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .products {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.product {
+  text-align: center;
+  border: 1px solid var(--color-grey);
+}
+.text-striked{
+  text-decoration: line-through;
+  text-decoration: var(--color-danger) double line-through;
+}
+
+.product__price:before {
+  content: '$';
+}
+
+.product-info{
+  text-align: left;
+  padding: 10px;
+  background-color: #efefef;
+}
+
+.product-info p{
+  font-size: .9rem;
+}
+
+.product-info button{
+  float: right;
+  position: relative;
+  top: -6px;
+}
+
+.product__image {
+  max-width: 140px;
+  max-height: 140px;
+  padding: var(--base-padding);
+  transition: .3s all;
+  filter: drop-shadow(0px 0px 0px transparent);
+}
+
+.discount-ribbon{
+  font-size: 0.7rem;
+  color: var(--color-white);
+  padding: 5px;
+  width: 45px;
+  top: 27%;
+  font-weight: 200;
+  position: absolute;
+  background-color: var(--color-green);
+}
+
+.product:hover .product__image {
+  animation: .5s shake-product-image;
+}
+
+@keyframes shake-product-image {
+  25% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }  
+  75% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* sticky component */
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  padding: 50px;
+  font-size: 20px;
+}
+
+/* ----------------- Cart ----------------- */
+.cart-main{  
+  display: grid;
+  grid-gap: var(--base-padding);
+  grid-template-columns: auto 300px;
+}
+.cart {
+  display: grid;  
+  grid-gap: var(--base-padding);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.cart h3 {
+  margin: 0;
+}
+
+.cart__item {
+  display: grid;
+  font-size: 0.8rem;
+  grid-template-columns: 2rem 7rem 3rem auto 1rem auto auto;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid var(--color-grey);
+  animation: .3s add-cart-item;
+}
+
+@keyframes add-cart-item {
+  from {
+    margin-left: -200px;
+    margin-right: 200px;
+    opacity: 0;
+  }
+  to {
+    margin-left: 0;
+    margin-right: 0;
+    opacity: 1;
+  }
+}
+
+.cart__item--removed {
+  animation: .3s remove-cart-item;
+}
+
+@keyframes remove-cart-item {
+  to {
+    margin-left: 200px;
+    margin-right: -200px;
+    opacity: 0;
+  }
+}
+
+.cart__item__image {
+  max-width: 28px;
+}
+
+@media screen and (min-width: 600px) {
+  .cart__item__image {
+    max-width: 38.5px;
+  }
+}
+
+.cart__item__price:before {
+  content: '$';
+}
+
+.cart-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--base-padding);
+}
+
+.back-button{
+  cursor: pointer;
+}
+
+.total-box{
+  border: 1px solid #efefef;
+  padding: 15px 15px 0;
+  font-size: 0.8rem;
+}
+
+.total-box p span{
+  float:right;
+}
+.total-box p:last-child{
+  background-color: #efefef;
+  padding: 10px 15px 10px 16px;
+  width: 100%;
+  margin: 0.5rem -15px 0;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(255, 255, 255, .7);
+  cursor: wait;
+}
+
+/* view load */
+.inactive{
+  display: none;
+}
+
+
+/* snackbar */
+#snackbar {
+  visibility: hidden; /* Hidden by default. Visible on click */
+  min-width: 250px; /* Set a default minimum width */
+  margin-left: -125px; /* Divide value of min-width by 2 */
+  background-color: #333; /* Black background color */
+  color: #fff; /* White text color */
+  text-align: center; /* Centered text */
+  border-radius: 2px; /* Rounded borders */
+  padding: 16px; /* Padding */
+  position: fixed; /* Sit on top of the screen */
+  z-index: 1; /* Add a z-index if needed */
+  left: 50%; /* Center the snackbar */
+  top: 30px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+  visibility: visible; /* Show the snackbar */
+
+/* Add animation: Take 0.5 seconds to fade in and out the snackbar. 
+However, delay the fade out process for 2.5 seconds */
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+  from {top: 0; opacity: 0;} 
+  to {top: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {top: 0; opacity: 0;}
+  to {top: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {top: 30px; opacity: 1;} 
+  to {top: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {top: 30px; opacity: 1;}
+  to {top: 0; opacity: 0;}
+}
