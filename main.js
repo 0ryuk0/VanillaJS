@@ -19,7 +19,7 @@
                 if(!product['updatedPrice']){
                     product['updatedPrice'] = 0;
                 }
-                product['updatedPrice'] = product.price - (product.price * product.discount / 100);
+                product['updatedPrice'] = product.price - (product.discount*product.price*0.01);
             }
             insertProductsToList(product);
         });
@@ -62,7 +62,6 @@
     };
 
     function addToCartEvent(id){
-        
         var currentProduct = products.filter(product => product.id === id);
         var isProductInCart = cart.filter((product) => {
             if(product.id === id){
@@ -213,10 +212,11 @@
             totalSummary.cartItemCount += (cartItem.quantity? cartItem.quantity: 0);
             totalSummary.totalRawPrice += cartItem.price * (cartItem.quantity? cartItem.quantity: 1);
             totalSummary.typeDiscount += cartItem.type === 'fiction' ? 
-                                            (cartItem.updatedPrice ? (cartItem.updatedPrice*0.15) : (cartItem.price*0.15) ) :
+                                            (cartItem.updatedPrice ? (cartItem.updatedPrice*0.15) : (cartItem.price*0.15)) * 
+                                            (cartItem.quantity? cartItem.quantity : 1) :
                                             0;
             totalSummary.cartTotal += (cartItem.quantity * (cartItem.updatedPrice? cartItem.updatedPrice :cartItem.price)) - totalSummary.typeDiscount;                                        
-            totalSummary.totalDiscount = totalSummary.totalRawPrice - totalSummary.cartTotal;
+            totalSummary.totalDiscount = totalSummary.totalRawPrice - totalSummary.cartTotal - totalSummary.typeDiscount;
         });
         
         // insert total-order summary component
@@ -230,6 +230,3 @@
             </div>	
         `);
     };
-
-  
-
